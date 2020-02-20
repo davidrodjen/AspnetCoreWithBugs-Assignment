@@ -28,5 +28,14 @@ namespace AspnetCoreWithBugs.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        /// <summary>
+        /// Had to add a privacy link, and privacy action, and privacy page
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Privacy()
+        {
+            return View();
+        }
     }
 }
