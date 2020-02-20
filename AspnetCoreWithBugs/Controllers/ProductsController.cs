@@ -18,6 +18,11 @@ namespace AspnetCoreWithBugs.Controllers
             _context = context;
         }
 
+        public IActionResult ManageProduct()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.Product.ToListAsync());
