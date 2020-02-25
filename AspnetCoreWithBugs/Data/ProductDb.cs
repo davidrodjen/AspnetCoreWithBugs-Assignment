@@ -23,11 +23,19 @@ namespace AspnetCoreWithBugs.Data
             return p;
         }
 
-        public async static Task Delete(Product p, ProductContext context)
+        public static async Task Delete(Product p, ProductContext context)
         {
             await context.AddAsync(p);
             context.Entry(p).State = EntityState.Deleted;
             await context.SaveChangesAsync();
+        }
+
+        public static async Task<Product> Edit(Product p, ProductContext context)
+        {
+            await context.AddAsync(p);
+            context.Entry(p).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return p;
         }
 
 
