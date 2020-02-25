@@ -55,5 +55,13 @@ namespace AspnetCoreWithBugs.Data
                              .ToListAsync();
             return products;
         }
+
+        public static async Task<Product> GetProductById(int id, ProductContext context)
+        {
+            Product p = await (from product in context.Product
+                               where product.ProductId == id
+                               select product).SingleOrDefaultAsync();
+            return p;
+        }
     }
 }

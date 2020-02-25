@@ -19,6 +19,7 @@ namespace AspnetCoreWithBugs.Controllers
             _context = context;
         }
 
+        //Maybe delete this?
         public IActionResult ManageProduct()
         {
             return View();
@@ -48,6 +49,7 @@ namespace AspnetCoreWithBugs.Controllers
             return maxPage;
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -58,12 +60,13 @@ namespace AspnetCoreWithBugs.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(product);
+                await ProductDb.Create(product, _context);
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var product = await _context.Product.FindAsync(id);
@@ -87,10 +90,10 @@ namespace AspnetCoreWithBugs.Controllers
             return View(product);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+            Product product = await ProductDb.GetProductById(id, _context);
 
             if (product == null)
             {
@@ -103,9 +106,11 @@ namespace AspnetCoreWithBugs.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            Product p = await ProductDb.GetProductById(id, _context);
+            await ProductDb.Delete(p, _context);
+            TempData["Message"] = $"{p.Name} deleted successfully";
             return RedirectToAction(nameof(Index));
+
         }
 
         private bool ProductExists(int id)
