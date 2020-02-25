@@ -38,9 +38,22 @@ namespace AspnetCoreWithBugs.Data
             return p;
         }
 
+        public static async Task<int> GetNumProduct(ProductContext context)
+        {
+            return await context.Product.CountAsync();
+        }
 
+        public static async Task<List<Product>> GetProductByPage(ProductContext context, int pageNum, int PageSize)
+        {
+            const int Pageoffset = 1;
 
-
-
+            List<Product> products =
+                await context.Product
+                             .OrderBy(p => p.ProductId)
+                             .Skip(PageSize * (pageNum - Pageoffset))
+                             .Take(PageSize)
+                             .ToListAsync();
+            return products;
+        }
     }
 }
