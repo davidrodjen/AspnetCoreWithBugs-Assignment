@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 
 namespace AspnetCoreWithBugs.Data
 {
-    public class ProductDb
+    public static class ProductDb
     {
+
+        ///public static async Task<Clothing> GetProductById(int id, )
+
+
+
     }
 }
