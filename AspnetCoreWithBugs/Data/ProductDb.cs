@@ -1,4 +1,5 @@
 ﻿using AspnetCoreWithBugs.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,13 @@ namespace AspnetCoreWithBugs.Data
             await context.SaveChangesAsync();
 
             return p;
+        }
+
+        public async static Task Delete(Product p, ProductContext context)
+        {
+            await context.AddAsync(p);
+            context.Entry(p).State = EntityState.Deleted;
+            await context.SaveChangesAsync();
         }
 
 
