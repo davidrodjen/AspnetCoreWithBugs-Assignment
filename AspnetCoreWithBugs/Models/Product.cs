@@ -17,7 +17,7 @@ namespace AspnetCoreWithBugs.Models
 
         [Required]
         [DataType(DataType.Currency)]
-        public string Price { get; set; }
+        public double Price { get; set; }
 
         [Required]
         public string Description { get; set; }
